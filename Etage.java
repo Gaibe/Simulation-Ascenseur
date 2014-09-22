@@ -78,13 +78,13 @@ public class Etage extends Constantes {
     	if (listePassagersEtage.isEmpty()){
     		veutEntrer=false;
     	}else{
-    		
-    		
-    		for (Passager lpe : this.listePassagersEtage) {
-				
-			}
-    			
+    		if(Constantes.isModeParfait()){
+	    		for (Passager lpe : this.listePassagersEtage) {
+	    			
+				}
+	    		veutEntrer = true;
     		}
+    	}
     	
     	return veutEntrer;
     	

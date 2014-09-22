@@ -27,6 +27,7 @@ public class EvenementPassageCabinePalier extends Evenement {
         	cabine.etage=etage;
         	}
         }
+
         assert !cabine.porteOuverte;
         
     }
