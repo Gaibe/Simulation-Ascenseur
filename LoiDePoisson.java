@@ -19,7 +19,7 @@ public class LoiDePoisson {
      * Le p de la loi de poisson.
      */
     private double p;
-
+    
     /**
      * @param germe prendre n'importe quelle valeur plus grande que 0.
      * @param tm    fixe le tempsMoyen entre deux occurrences.

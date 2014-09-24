@@ -23,7 +23,7 @@ public class Passager {
     public Etage etageDestination() {
         return this.etageDestination;
     }
-
+    
     public int numeroDestination() {
         return this.etageDestination.numero();
     }

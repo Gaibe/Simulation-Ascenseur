@@ -14,7 +14,7 @@ public class Cabine extends Constantes {
 	porteOuverte = false;
 	status = 'v';
     }
-    
+   
     public void afficheLaSituation() {
         System.out.print("Contenu de la cabine: ");
         for (int i = 0; i < tableauPassager.length; i++) {

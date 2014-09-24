@@ -15,7 +15,7 @@ public class Echeancier extends Constantes {
     public boolean estVide() {
         return listeEvenements.isEmpty();
     }
-    
+   
     public void ajouter(Evenement e) {
         int pos = 0;
         while (pos < listeEvenements.size()) {

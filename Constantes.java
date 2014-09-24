@@ -12,7 +12,7 @@ public class Constantes {
     public static boolean isModeParfait() {
         return modeParfait;
     }
-    
+   
     public static void setModeParfait(boolean p) {
         modeParfait = p;
     }
