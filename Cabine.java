@@ -15,10 +15,6 @@ public class Cabine extends Constantes {
 	status = 'v';
     }
     
-    public void setStatus(char s){
-    	this.status = s;
-    }
-    
     public void afficheLaSituation() {
         System.out.print("Contenu de la cabine: ");
         for (int i = 0; i < tableauPassager.length; i++) {
@@ -52,28 +48,17 @@ public class Cabine extends Constantes {
     	notYetImplemented();
     	return true;
     }
-    public boolean passagerDessent(){
+    public boolean cabineDessent(){
     	if (status =='v'){
-    		return true;
+    	return true;
  
-    	}else return false;
+    }else return false;
     }
-    
-    public boolean estArrete(){
-    	boolean ret=false;
-    	if(status=='-'){
-    		ret=true;
-    	}
-    	return ret;
-    }
-    
     public boolean regardePassager(){
-    	
-    	boolean entrer = etage.veutEntrer(status);
-    	if(entrer && !estArrete()){
-    		setStatus('-');
-    	}
-    	return entrer;
+    	return etage.veutEntrer(status);
+    }
+    public void arreterCabine(){
+    	status='-';
     }
     public void MonterCabine(){
     	

@@ -17,17 +17,17 @@ public class EvenementPassageCabinePalier extends Evenement {
 
         assert cabine.status() != '-';
         assert !cabine.porteOuverte;
-        if (cabine.passagerDessent() == true){
+        cabine.etage=etage;
+        if (cabine.cabineDessent() == true){
         	if(cabine.regardePassager()){
         		EvenementOuverturePorteCabine opc = new EvenementOuverturePorteCabine(date+Constantes.tempsPourOuvrirOuFermerLesPortes);
         		echeancier.ajouter(opc);
         	}else{	
         	EvenementPassageCabinePalier pcp = new EvenementPassageCabinePalier(date+Constantes.tempsPourBougerLaCabineDUnEtage,etage.moins_un);
         	echeancier.ajouter(pcp);
-        	cabine.etage=etage;
+        	
         	}
         }
-
         assert !cabine.porteOuverte;
         
     }

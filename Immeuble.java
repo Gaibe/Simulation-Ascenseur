@@ -97,4 +97,27 @@ public class Immeuble extends Constantes {
         assert res == (etageLePlusHaut().numero() - etageLePlusBas().numero() + 1);
         return res;
     }
+    public boolean destinationCabine(){
+    	
+    	if(cabine.status()=='^'){
+    		
+    		//for (int i=cabine.etage.numero(); i<tableauDesEtages.length; i++){
+    			//if (tableauDesEtages[i].veutEntrer('^')){
+    				
+    		//	}
+    		//}
+    		if (tableauDesEtages[cabine.etage.numero()+1].veutEntrer('^')){
+    			cabine.arreterCabine();
+    		}
+    	}else{
+    		if(cabine.status()=='v'){
+    		
+    	
+    			if (tableauDesEtages[cabine.etage.numero()-1].veutEntrer('v')){
+    				cabine.arreterCabine();
+    			}
+    		}
+    	}
+    	return true;
+    }
 }
