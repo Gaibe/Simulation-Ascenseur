@@ -20,22 +20,25 @@ public class Main { // Programme de simulation d'un ascensseur
         int loop = 1;
         int simulationStepCounter = 0;
         // Boucle principale du simulateur:
-        while (!echeancier.estVide()) {
+        while ( !echeancier.estVide() ) {
             if (loop == 1) {
                 System.out.print("----- Etat actuel du simulateur (nombre total de pas = ");
                 System.out.print(simulationStepCounter);
                 System.out.println(") -----");
                 immeuble.afficheLaSituation();
                 echeancier.afficheLaSituation(immeuble);
-            }
-            if (loop == 1) {
-                System.out.println("Taper \"Enter\" ou le nombre de pas de simulation que vous voulez réaliser");
+                System.out.println("Taper \"Enter\" ou le nombre de pas de simulation que vous voulez faire");
                 try {
-                    loop = Integer.parseInt(input.readLine());
-                    if (loop < 0) {
-                        loop = 1;
-                    }
-                } catch (Exception e) {
+		    String line = input.readLine();
+		    if ( line.equals("q") ) {
+			return;
+		    } else {
+			loop = Integer.parseInt(line);
+			if (loop < 0) {
+			    return;
+			}
+		    }
+		} catch (Exception e) {
                     loop = 1;
                 }
             } else {
