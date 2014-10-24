@@ -2,11 +2,11 @@ import java.util.LinkedList;
 
 public class Echeancier extends Constantes {
     //
-    // La liste triée chronologiquement des événements du simulateur.
+    // La liste triee chronologiquement des evenements du simulateur.
     //
     
     private LinkedList<Evenement> listeEvenements;
-    // La liste triée des événements.
+    // La liste triee des evenements.
     
     public Echeancier() {
         listeEvenements = new LinkedList<Evenement>();
@@ -15,7 +15,7 @@ public class Echeancier extends Constantes {
     public boolean estVide() {
         return listeEvenements.isEmpty();
     }
-   
+    
     public void ajouter(Evenement e) {
         int pos = 0;
         while (pos < listeEvenements.size()) {

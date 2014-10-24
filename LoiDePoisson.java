@@ -6,12 +6,12 @@
 
 public class LoiDePoisson {
     /**
-     * Temps moyen entre deux occurrences d'un même événement.
+     * Temps moyen entre deux occurrences d'un meme evenement.
      */
     private long tempsMoyen;
 
     /**
-     * Générateur aléatoire uniforme.
+     * Generateur aléatoire uniforme.
      */
     private PressRandomNumberGenerator random;
 
@@ -19,9 +19,9 @@ public class LoiDePoisson {
      * Le p de la loi de poisson.
      */
     private double p;
-    
+
     /**
-     * @param germe prendre n'importe quelle valeur plus grande que 0.
+     * @param germe prendre n importe quelle valeur plus grande que 0.
      * @param tm    fixe le tempsMoyen entre deux occurrences.
      */
     LoiDePoisson(int germe, long tm) {
@@ -38,7 +38,7 @@ public class LoiDePoisson {
     }
 
     /**
-     * Donne le temps de l'occurrence suivante.
+     * Donne le temps de l occurrence suivante.
      */
     public long suivant() {
         long r = 0;

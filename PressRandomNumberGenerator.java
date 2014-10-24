@@ -1,6 +1,6 @@
 public class PressRandomNumberGenerator {
     /*
-      Press' standard generator, from the SmartEiffel library. 
+      Press standard generator, from the SmartEiffel library. 
     */
     private int germe;
 
@@ -10,7 +10,7 @@ public class PressRandomNumberGenerator {
 
     PressRandomNumberGenerator(int valeurDuGerme) {
     /*
-      Prendre n'importe quelle valeur plus grande que 0 pour initialiser le germe.
+      Prendre n importe quelle valeur plus grande que 0 pour initialiser le germe.
 	*/
         int i = 1;
         germe = valeurDuGerme;
@@ -46,7 +46,7 @@ public class PressRandomNumberGenerator {
 
     public double doubleSuivant() {
     /*
-	  Donne le double aléatoire suivant.
+	  Donne le double aleatoire suivant.
 	*/
         next();
         return ((double) iy) / 2147483647;
@@ -54,7 +54,7 @@ public class PressRandomNumberGenerator {
 
     public int intSuivant(int maxi) {
 	/*
-	  Donne le int aléatoire suivant dans l'intervalle [1 .. maxi].
+	  Donne le int aleatoire suivant dans l'intervalle [1 .. maxi].
 	*/
         next();
         return (iy % maxi) + 1;

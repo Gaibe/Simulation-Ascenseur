@@ -1,123 +1,129 @@
 public class Immeuble extends Constantes {
-
+    
+    public Cabine cabine;
+    // La `cabine' de l'ascenseur.
+    
+    private int niveauDuSol;
+    // le niveau 0 en general.
+    
+    private  int etageMin;
+    // numero de l'etage le plus bas.
+    
     private Etage[] tableauDesEtages;
-
-    public Cabine cabine; // de l'ascenseur.
-
-    private Etage niveauDuSol; // le niveau 0.
-
+    // Le tableau des etages desservis par l'ascenseur. 
+        
     public long cumulDesTempsDeTransport = 0;
-
-    public long nombreTotalDesPassagersSortis = 0;
-
-    public Etage etageLePlusBas() {
-	Etage res = tableauDesEtages[0];
-        assert res != null;
-	assert res.moins_un == null;
-        return res ;
+    
+    public int nombreTotalDesPassagersSortis = 0;
+    
+    public Immeuble (Echeancier echeancier) {
+		int i = 0;
+		
+		etageMin = -1; // Numero de l'etage inferieur (le plus bas)
+		tableauDesEtages = new Etage[8];
+		
+		if ( getEtageMin() > 0 ) {
+		    niveauDuSol = getEtageMin();
+		}
+		int fa;
+		
+		i = getEtageMax();
+		while (	i >= getEtageMin() ) {
+		    // Une personnne toutes les 3 secondes:
+		    fa = 30;
+		    if ( i != niveauDuSol ) {
+			fa = fa * (tableauDesEtages.length - 1);
+		    }
+		    changerEtage(new Etage(fa, this), i);
+		    i = i - 1;
+		}
+		cabine = new Cabine(etage(this.getEtageMax()));
+		// Initialisation des premiers EvenementArrivee a chaque etage:
+		
+		for (int j=getEtageMax(); j >= getEtageMin(); j--){
+		    new EvenementArriveePassagerPalier(etage(j).arriveeSuivant(), etage(j), echeancier);
+		}
+		
+		new EvenementPassageCabinePalier(0, etage(getEtageMax() - 1), echeancier);
     }
-
-    public Etage etageLePlusHaut() {
-	Etage res = tableauDesEtages[tableauDesEtages.length - 1];
-        assert res != null;
-	assert res.plus_un == null;
-        return res;
-    }
-
-    public Etage niveauDuSol() {
-        assert etageLePlusHaut().numero() >= niveauDuSol.numero();
-        assert etageLePlusBas().numero() <= niveauDuSol.numero();
-        return niveauDuSol;
-    }
-
-    public Immeuble(Echeancier echeancier) {
-	Etage e = null;
-	Etage e_moins_un = null;
-        tableauDesEtages = new Etage[8];
-        int n = -1;
-        for (int i = 0; i < tableauDesEtages.length; i++) {
-            // Une personnne toutes les 3 secondes:
-            int fa = 30;
-            if (n != 0) {
-                fa = fa * (tableauDesEtages.length - 1);
-            }
-	    e_moins_un = e;
-	    e = new Etage(n, fa, this);
-	    tableauDesEtages[i] = e;
-	    e.moins_un = e_moins_un;
-            if (n == 0) {
-                niveauDuSol = e;
-            }
-            n++;
-        }
-        for (int i = tableauDesEtages.length - 1; i > 0; i--) {
-	    tableauDesEtages[i - 1].plus_un = tableauDesEtages[i];
-	}
-        for (int i = 0; i < tableauDesEtages.length; i++) {
-            Etage etage = tableauDesEtages[i];
-            long date = etage.arriveeSuivant();
-            echeancier.ajouter(new EvenementArriveePassagerPalier(date, etage));
-        }
-	Etage ed = etageLePlusHaut();
-        cabine = new Cabine(ed);
-	echeancier.ajouter(new EvenementPassageCabinePalier(tempsPourBougerLaCabineDUnEtage*2, etage(ed.numero() - 1)));
-    }
-
-    public void afficheLaSituation() {
-        System.out.print("Immeuble (mode ");
-        if (isModeParfait()) {
-            System.out.print("parfait");
-        } else {
-            System.out.print("infernal");
-        }
-        System.out.println("):");
-        int i = etageLePlusHaut().numero();
-        while (i >= etageLePlusBas().numero()) {
-            etage(i).afficheLaSituation();
-            i--;
-        }
-        cabine.afficheLaSituation();
-        System.out.println("Cumul des temps de transport: " + cumulDesTempsDeTransport);
-        System.out.println("Nombre total des passagers sortis: " + nombreTotalDesPassagersSortis);
-        System.out.println("Ratio cumul temps / nb passagers : " +
-                (nombreTotalDesPassagersSortis == 0 ? 0 : (cumulDesTempsDeTransport / nombreTotalDesPassagersSortis)));
-    }
-
-    public Etage etage(int i) {
-        // Retrouve par calcul (assez lent) un Etage avec son numero.
-        assert etageLePlusBas().numero() <= i : "ERREUR trop haut";
-        assert etageLePlusHaut().numero() >= i : "ERREUR trop bas";
-        Etage res = tableauDesEtages[i - etageLePlusBas().numero()];
-        assert res.numero() == i;
-        return res;
-    }
-
-    public int nbEtages() {
-        int res = tableauDesEtages.length;
-        assert res == (etageLePlusHaut().numero() - etageLePlusBas().numero() + 1);
-        return res;
-    }
-    public boolean destinationCabine(){
-    	
-    	if(cabine.status()=='^'){
-    		
-    		//for (int i=cabine.etage.numero(); i<tableauDesEtages.length; i++){
-    			//if (tableauDesEtages[i].veutEntrer('^')){
-    				
-    		//	}
-    		//}
-    		if (tableauDesEtages[cabine.etage.numero()+1].veutEntrer('^')){
-    			cabine.arreterCabine();
-    		}
-    	}else{
-    		if(cabine.status()=='v'){
-    		
-    	
-    			if (tableauDesEtages[cabine.etage.numero()-1].veutEntrer('v')){
-    				cabine.arreterCabine();
-    			}
-    		}
+    
+    public int numeroDe(Etage e){
+    	int res = getEtageMin();
+    	while (e != etage(res)){
+	    res ++;
     	}
-    	return true;
+    	return res;
+    }
+    
+    public void afficheLaSituation () {
+	System.out.print("Immeuble (mode ");
+	if ( Constantes.isModeParfait() ) {
+	    System.out.print("parfait");
+	}
+	else {
+	    System.out.print("infernal");
+	}
+	System.out.println("):");
+	int i = getEtageMax();
+	while ( i >= getEtageMin() ) {
+	    etage(i).afficheLaSituation();
+	    i--;
+	}
+	cabine.afficheLaSituation();
+	System.out.print("Cumul des temps de transport: ");
+	System.out.println(cumulDesTempsDeTransport);
+	System.out.print("Nombre total des passagers sortis: ");
+	System.out.println(nombreTotalDesPassagersSortis);
+	
+    }
+    
+    public Etage etage (int i) {
+    	 
+    	Etage ret = tableauDesEtages[ i - getEtageMin() ];
+    	assert ret != null;
+    	return ret;
+    }
+    
+    private void changerEtage (Etage e, int i) {
+    	tableauDesEtages[ i - getEtageMin() ] = e;
+    }
+    
+
+    
+    public Etage getNiveauDuSol(){
+    	return etage(niveauDuSol);
+    }
+    public int getEtageMin() {
+	return etageMin;
+    }
+    
+    public int getEtageMax() {
+	return etageMin + tableauDesEtages.length - 1;
+    }
+	//Fonction d'appel de la cabine
+    public void appelCabine(int numEtage){
+		Passager tmp;
+		Passager prio = null;
+		for(int j=0; j<7; j++){
+		//pour 7 etages
+			if(!tableauDesEtages[j].isVide()){
+			//VErification du vide de la cabine
+				tmp=tableauDesEtages[j].getPassager();
+				//Gestion de la priorite
+				if(prio==null){
+					prio=tmp;
+				}else{
+					if(tmp.dateDepart()<prio.dateDepart()){
+						prio=tmp;
+					}
+				}
+			}
+		}
+		//Changement de status de la cabine
+		if(numEtage>prio.etageDepart().numero()){
+			cabine.status='v';
+		}else{
+			cabine.status='^';
+		} 
     }
 }
